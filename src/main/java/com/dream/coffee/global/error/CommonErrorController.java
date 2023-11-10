@@ -1,4 +1,4 @@
-package com.berna.rantemplate.global.error;
+package com.dream.coffee.global.error;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;

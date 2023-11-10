@@ -1,4 +1,4 @@
-package com.berna.rantemplate.global.error;
+package com.dream.coffee.global.error;
 
 
 import org.springframework.http.HttpStatus;

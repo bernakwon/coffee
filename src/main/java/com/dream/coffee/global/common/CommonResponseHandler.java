@@ -1,6 +1,6 @@
-package com.berna.rantemplate.global.common;
+package com.dream.coffee.global.common;
 
-import com.berna.rantemplate.global.error.ErrorResponse;
+import com.dream.coffee.global.error.ErrorResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

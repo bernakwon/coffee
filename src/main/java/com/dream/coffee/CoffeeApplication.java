@@ -1,13 +1,13 @@
-package com.berna.rantemplate;
+package com.dream.coffee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RanTemplateApplication {
+public class CoffeeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RanTemplateApplication.class, args);
+        SpringApplication.run(CoffeeApplication.class, args);
     }
 
 }
