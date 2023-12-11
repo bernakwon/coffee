@@ -1,7 +1,6 @@
 package com.dream.coffee.domain.info.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -19,4 +18,15 @@ public class User {
     private String telNo;
 
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id",insertable=false, updatable=false)
+    private Party parties;
+
+    public Party getParties() {
+        return parties;
+    }
+
+    public void setParties(Party parties) {
+        this.parties = parties;
+    }
 }
