@@ -2,13 +2,21 @@ package com.dream.coffee.domain.info.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-public class MenuInfo {
+public class Menu {
     @Id
     private Long id;
+    @Id
+    private Long cafeId;
+    private String name;
+
 }

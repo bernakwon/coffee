@@ -3,14 +3,16 @@ package com.dream.coffee.domain.info.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 public class Party {
@@ -18,7 +20,7 @@ public class Party {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "parties")
-    private List<UserInfo> users;
+    private List<User> users;
     private LocalDateTime endDt;
 
 }
