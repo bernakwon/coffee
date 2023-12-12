@@ -10,23 +10,11 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-public class User {
+public class Users {
     @Id
     private Long id;
     private String name;
     private String team;
     private String telNo;
 
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id",insertable=false, updatable=false)
-    private Party parties;
-
-    public Party getParties() {
-        return parties;
-    }
-
-    public void setParties(Party parties) {
-        this.parties = parties;
-    }
 }

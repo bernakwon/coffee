@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Order {
+public class Orders {
     @Id
     private Long id;
     @OneToOne

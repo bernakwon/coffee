@@ -1,10 +1,24 @@
 package com.dream.coffee.domain.info.api;
 
+import com.dream.coffee.domain.info.entity.Users;
+import com.dream.coffee.domain.info.repository.UsersRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RestController
 public class InfoApi {
+
+    private final UsersRepository usersRepository;
+    @GetMapping("/users")
+    public List<Users> getList(){
+
+        return usersRepository.findAll();
+    }
 
     /*
     @RequestMapping("/users")

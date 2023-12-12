@@ -19,8 +19,6 @@ public class Party {
     @Id
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "parties")
-    private List<User> users;
     private LocalDateTime endDt;
 
 }

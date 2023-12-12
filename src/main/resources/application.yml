@@ -23,14 +23,14 @@ logging:
   level:
     root: info
 server:
-  port: 8080
+  port: 9595
   error:
    include-exception: false
    include-message: always
    include-stacktrace: on_param
    whitelabel.enabled: false
 springdoc:
-  packages-to-scan: com.marketboro.membership
+  packages-to-scan: com.dream.coffee
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
