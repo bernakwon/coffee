@@ -1,24 +1,23 @@
 package com.dream.coffee.domain.info.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.Set;
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 public class Party {
     @Id
-    private Long id;
+    private Long party_id;
     private String name;
     private LocalDateTime endDt;
 
+
+    @OneToMany(mappedBy = "party",fetch = FetchType.EAGER)
+    private Set<PartyAttendee> partyAttendees;
 }

@@ -1,8 +1,6 @@
 package com.dream.coffee.domain.info.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @Entity
 public class Menu {
-    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Id
     private Long cafeId;

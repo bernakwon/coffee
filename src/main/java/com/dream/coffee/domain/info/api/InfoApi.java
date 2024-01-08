@@ -1,6 +1,8 @@
 package com.dream.coffee.domain.info.api;
 
+import com.dream.coffee.domain.info.entity.Party;
 import com.dream.coffee.domain.info.entity.Users;
+import com.dream.coffee.domain.info.repository.PartyRepository;
 import com.dream.coffee.domain.info.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +16,19 @@ import java.util.List;
 public class InfoApi {
 
     private final UsersRepository usersRepository;
+
+    private final PartyRepository partyRepository;
     @GetMapping("/users")
     public List<Users> getList(){
 
         return usersRepository.findAll();
+    }
+
+
+    @GetMapping("/parties")
+    public List<Party> getParties(){
+
+        return partyRepository.findAll();
     }
 
     /*
