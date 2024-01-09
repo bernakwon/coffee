@@ -13,7 +13,9 @@ import java.util.Set;
 @Entity
 public class Party {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long party_id;
+    private String cafeId;
     private String name;
     private LocalDateTime endDt;
 
