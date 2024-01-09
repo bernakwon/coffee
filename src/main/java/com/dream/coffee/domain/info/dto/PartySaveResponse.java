@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PartySaveResponse {
 
-    private Party party;
+    private Long partyId;
+    private String partyName;
+
 }

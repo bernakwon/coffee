@@ -15,10 +15,12 @@ import java.util.Set;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_id;
+    private Long userId;
     private String name;
     private String team;
     private String telNo;
+    private String department;
+    private String rank;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<PartyAttendee> partyAttendees;
 }

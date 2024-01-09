@@ -1,9 +1,11 @@
 package com.dream.coffee.domain.info.api;
 
+import com.dream.coffee.domain.info.dto.UserResponse;
 import com.dream.coffee.domain.info.entity.Party;
 import com.dream.coffee.domain.info.entity.Users;
 import com.dream.coffee.domain.info.repository.PartyRepository;
 import com.dream.coffee.domain.info.repository.UsersRepository;
+import com.dream.coffee.domain.info.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +17,13 @@ import java.util.List;
 @RestController
 public class InfoApi {
 
-    private final UsersRepository usersRepository;
-
-    private final PartyRepository partyRepository;
+    private final UserService userService;
     @GetMapping("/users")
-    public List<Users> getList(){
+    public List<UserResponse> getList(){
 
-        return usersRepository.findAll();
+        return userService.getAllUsers();
     }
 
-
-    @GetMapping("/parties")
-    public List<Party> getParties(){
-
-        return partyRepository.findAll();
-    }
 
     /*
     @RequestMapping("/users")

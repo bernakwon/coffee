@@ -43,6 +43,6 @@ public class PartyServiceImpl implements PartyService {
         Party result = partyRepository.save(newParty.getLeft());
         partyAttendeeRepository.saveAll(newParty.getRight());
 
-        return new PartySaveResponse(result);
+        return new PartySaveResponse(result.getPartyId(),result.getName());
     }
 }
