@@ -20,15 +20,19 @@ public class QUsers extends EntityPathBase<Users> {
 
     public static final QUsers users = new QUsers("users");
 
+    public final StringPath department = createString("department");
+
     public final StringPath name = createString("name");
 
     public final SetPath<PartyAttendee, QPartyAttendee> partyAttendees = this.<PartyAttendee, QPartyAttendee>createSet("partyAttendees", PartyAttendee.class, QPartyAttendee.class, PathInits.DIRECT2);
+
+    public final StringPath rank = createString("rank");
 
     public final StringPath team = createString("team");
 
     public final StringPath telNo = createString("telNo");
 
-    public final NumberPath<Long> user_id = createNumber("user_id", Long.class);
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QUsers(String variable) {
         super(Users.class, forVariable(variable));

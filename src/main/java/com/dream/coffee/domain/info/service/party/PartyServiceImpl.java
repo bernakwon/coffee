@@ -1,5 +1,6 @@
 package com.dream.coffee.domain.info.service.party;
 
+import com.dream.coffee.domain.info.dto.PartyInfoResponse;
 import com.dream.coffee.domain.info.dto.PartySaveRequestParam;
 import com.dream.coffee.domain.info.dto.PartySaveResponse;
 import com.dream.coffee.domain.info.entity.Party;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +46,14 @@ public class PartyServiceImpl implements PartyService {
         partyAttendeeRepository.saveAll(newParty.getRight());
 
         return new PartySaveResponse(result.getPartyId(),result.getName());
+    }
+
+    @Override
+    public PartyInfoResponse getById(Long partyId) {
+        PartyInfoResponse partyInfoResponse = new PartyInfoResponse();
+        Party party = partyRepository.findByPartyId(partyId);
+        Set<PartyAttendee> partyAttendeeList = party.getPartyAttendees();
+       // partyAttendeeList.
+        return null;
     }
 }

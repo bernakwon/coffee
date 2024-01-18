@@ -26,9 +26,9 @@ public class QParty extends EntityPathBase<Party> {
 
     public final StringPath name = createString("name");
 
-    public final NumberPath<Long> party_id = createNumber("party_id", Long.class);
-
     public final SetPath<PartyAttendee, QPartyAttendee> partyAttendees = this.<PartyAttendee, QPartyAttendee>createSet("partyAttendees", PartyAttendee.class, QPartyAttendee.class, PathInits.DIRECT2);
+
+    public final NumberPath<Long> partyId = createNumber("partyId", Long.class);
 
     public QParty(String variable) {
         super(Party.class, forVariable(variable));

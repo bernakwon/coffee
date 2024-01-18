@@ -1,14 +1,19 @@
 package com.dream.coffee.domain.info.api;
 
+import com.dream.coffee.domain.info.dto.PartyInfoResponse;
 import com.dream.coffee.domain.info.dto.UserResponse;
+import com.dream.coffee.domain.info.entity.Cafe;
 import com.dream.coffee.domain.info.entity.Party;
 import com.dream.coffee.domain.info.entity.Users;
 import com.dream.coffee.domain.info.repository.PartyRepository;
 import com.dream.coffee.domain.info.repository.UsersRepository;
+import com.dream.coffee.domain.info.service.cafe.CafeService;
+import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,82 +23,26 @@ import java.util.List;
 public class InfoApi {
 
     private final UserService userService;
+    private final CafeService cafeService;
+
+    private final PartyService partyService;
     @GetMapping("/users")
     public List<UserResponse> getList(){
 
         return userService.getAllUsers();
     }
+    @GetMapping("/cafe/info")
+    public List<Cafe> getCafeList(){
+        return cafeService.getAllCafe();
+    }
 
+    @GetMapping("/party/info/{partyId}")
+    public PartyInfoResponse getPartyList(@RequestPart Long partyId){
+        return partyService.getById(partyId);
+    }
 
     /*
-    @RequestMapping("/users")
-    @RequestMapping("/select/complate")
-    @RequestMapping("/cafeinfo")
 
-
-  * 1)**인원 정보 목록**
-
-/users
-
-모든 인원 정보를 반환
-
-request: x
-
-response
-
-이름(name)
-
-팀(team)
-
-부서(department)
-
-직급(rank)
-
-전화번호(c_no)
-
-2)**다음 버튼 클릭시(선택된 인원 저장 api)**
-
-/select/complate
-
-선택된 인원정보가 임시파티 테이블에 저장됨
-
-request:
-
-선택된 인원정보 배열
-
-[{권혜란,pd팀,기업부설연구소,잡부,010-6111-1111},{~~~}}
-
-response:
-
-임시파티 테이블의 id
-
-WF_크리에이터 파티생성01
-
----
-
-공통
-
-**1)카페목록(카페이름,카페별 메뉴)**
-
-/cafeinfo
-
-**2)파티정보 저장 api**
-
-request:
-
-임시 파티 id
-
-파티명
-
-카페
-
-마감일
-
-response:
-
-파티정보
-
-WF_주문자 주문현황01
 
 ---
 
