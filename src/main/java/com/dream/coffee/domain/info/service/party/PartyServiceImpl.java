@@ -49,11 +49,10 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public PartyInfoResponse getById(Long partyId) {
+    public List<PartyAttendee> getById(Long partyId) {
         PartyInfoResponse partyInfoResponse = new PartyInfoResponse();
-        Party party = partyRepository.findByPartyId(partyId);
-        Set<PartyAttendee> partyAttendeeList = party.getPartyAttendees();
-       // partyAttendeeList.
-        return null;
+        List<PartyAttendee> attendees = partyAttendeeRepository.findAttendeesByPartyId(partyId);
+
+        return attendees;
     }
 }

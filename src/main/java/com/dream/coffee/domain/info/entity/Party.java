@@ -10,6 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
 @Entity
 public class Party {
     @Id
@@ -20,6 +21,6 @@ public class Party {
     private LocalDateTime endDt;
 
 
-    @OneToMany(mappedBy = "party",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "party")
     private Set<PartyAttendee> partyAttendees;
 }

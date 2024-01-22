@@ -4,11 +4,12 @@ import com.dream.coffee.domain.info.dto.PartyInfoResponse;
 import com.dream.coffee.domain.info.dto.PartySaveRequestParam;
 import com.dream.coffee.domain.info.dto.PartySaveResponse;
 import com.dream.coffee.domain.info.entity.Party;
+import com.dream.coffee.domain.info.entity.PartyAttendee;
 
 import java.util.List;
 
 public interface PartyService{
     PartySaveResponse save(PartySaveRequestParam partySaveRequestParam);
 
-    PartyInfoResponse getById(Long partyId);
+    List<PartyAttendee> getById(Long partyId);
 }

@@ -4,6 +4,7 @@ import com.dream.coffee.domain.info.dto.PartyInfoResponse;
 import com.dream.coffee.domain.info.dto.UserResponse;
 import com.dream.coffee.domain.info.entity.Cafe;
 import com.dream.coffee.domain.info.entity.Party;
+import com.dream.coffee.domain.info.entity.PartyAttendee;
 import com.dream.coffee.domain.info.entity.Users;
 import com.dream.coffee.domain.info.repository.PartyRepository;
 import com.dream.coffee.domain.info.repository.UsersRepository;
@@ -11,10 +12,7 @@ import com.dream.coffee.domain.info.service.cafe.CafeService;
 import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class InfoApi {
     }
 
     @GetMapping("/party/info/{partyId}")
-    public PartyInfoResponse getPartyList(@RequestPart Long partyId){
+    public List<PartyAttendee> getPartyList(@PathVariable("partyId") Long partyId){
         return partyService.getById(partyId);
     }
 

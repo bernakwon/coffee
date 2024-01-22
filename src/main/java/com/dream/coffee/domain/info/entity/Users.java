@@ -1,16 +1,14 @@
 package com.dream.coffee.domain.info.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
 @Entity
 public class Users {
     @Id
@@ -21,6 +19,6 @@ public class Users {
     private String telNo;
     private String department;
     private String rank;
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")
     private Set<PartyAttendee> partyAttendees;
 }
