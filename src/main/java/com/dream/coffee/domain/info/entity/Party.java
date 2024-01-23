@@ -6,11 +6,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
+@Data
 @Entity
 public class Party {
     @Id

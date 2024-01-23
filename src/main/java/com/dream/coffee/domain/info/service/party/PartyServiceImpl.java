@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -49,6 +50,7 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
+    @Transactional
     public List<PartyAttendee> getById(Long partyId) {
         PartyInfoResponse partyInfoResponse = new PartyInfoResponse();
         List<PartyAttendee> attendees = partyAttendeeRepository.findAttendeesByPartyId(partyId);

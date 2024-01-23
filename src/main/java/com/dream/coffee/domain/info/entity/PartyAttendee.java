@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
+@Data
 @Entity
 public class PartyAttendee {
 

@@ -8,7 +8,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
+@Data
 @Entity
 public class Users {
     @Id
