@@ -1,13 +1,8 @@
 package com.dream.coffee.domain.info.api;
 
-import com.dream.coffee.domain.info.dto.PartyInfoResponse;
+import com.dream.coffee.domain.info.dto.PartyDtlInfoResponse;
 import com.dream.coffee.domain.info.dto.UserResponse;
 import com.dream.coffee.domain.info.entity.Cafe;
-import com.dream.coffee.domain.info.entity.Party;
-import com.dream.coffee.domain.info.entity.PartyAttendee;
-import com.dream.coffee.domain.info.entity.Users;
-import com.dream.coffee.domain.info.repository.PartyRepository;
-import com.dream.coffee.domain.info.repository.UsersRepository;
 import com.dream.coffee.domain.info.service.cafe.CafeService;
 import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
@@ -35,24 +30,12 @@ public class InfoApi {
     }
 
     @GetMapping("/party/info/{partyId}")
-    public List<PartyInfoResponse> getPartyList(@PathVariable("partyId") Long partyId){
+    public List<PartyDtlInfoResponse> getPartyList(@PathVariable("partyId") Long partyId){
         return partyService.getById(partyId);
     }
 
-    /*
+/*
 
-
----
-
-**1) 파티별 주문정보api**
-
-**1-1) 파티 정보**
-
-/party/info
-
-request:파티id
-
-response:파티명,마감일,취합종료여부,주문인원목록
 
 **1-2)주문 메뉴 정보**
 

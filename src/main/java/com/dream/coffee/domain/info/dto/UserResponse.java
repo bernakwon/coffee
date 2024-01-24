@@ -17,4 +17,9 @@ public class UserResponse {
     private String team;
     private String department;
     private String rank;
+
+    public UserResponse(Long userId, String name) {
+        this.userId =userId;
+        this.name=name;
+    }
 }
