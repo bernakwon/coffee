@@ -11,8 +11,6 @@ import com.dream.coffee.domain.info.repository.PartyRepository;
 import com.dream.coffee.domain.info.repository.UsersRepository;
 import com.dream.coffee.global.error.CommonException;
 import com.dream.coffee.global.error.ErrorCode;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -51,9 +48,9 @@ public class PartyServiceImpl implements PartyService {
 
     @Override
     @Transactional
-    public List<PartyAttendee> getById(Long partyId) {
-        PartyInfoResponse partyInfoResponse = new PartyInfoResponse();
-        List<PartyAttendee> attendees = partyAttendeeRepository.findAttendeesByPartyId(partyId);
+    public List<PartyInfoResponse> getById(Long partyId) {
+
+        List<PartyInfoResponse> attendees = partyAttendeeRepository.findAttendeesByPartyId(partyId);
 
         return attendees;
     }

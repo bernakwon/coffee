@@ -35,7 +35,7 @@ public class InfoApi {
     }
 
     @GetMapping("/party/info/{partyId}")
-    public List<PartyAttendee> getPartyList(@PathVariable("partyId") Long partyId){
+    public List<PartyInfoResponse> getPartyList(@PathVariable("partyId") Long partyId){
         return partyService.getById(partyId);
     }
 
