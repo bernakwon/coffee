@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @Entity
 public class Menu {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Id
     private Long cafeId;

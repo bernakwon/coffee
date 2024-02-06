@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class Party {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partyId;
     private String cafeId;
     private String name;
