@@ -61,7 +61,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
-          script: |
+          script:
           #  sudo docker kill ${{ secrets.PROJECT_NAME }}
           #  sudo docker rm -f ${{ secrets.PROJECT_NAME }}
           #  sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
