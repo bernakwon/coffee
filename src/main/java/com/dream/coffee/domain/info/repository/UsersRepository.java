@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface UsersRepository extends JpaRepository<Users,Long>  {
 
-    @Query("select new com.dream.coffee.domain.info.dto.UserResponse(u.userId,u.name,u.team,u.department,u.rank) from Users u")
+    @Query("select new com.dream.coffee.domain.info.dto.UserResponse(u.userId,u.name,u.team,u.department,u.level) from Users u")
     List<UserResponse> getAllList();
 }

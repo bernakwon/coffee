@@ -18,7 +18,7 @@ public class Users {
     private String team;
     private String telNo;
     private String department;
-    private String rank;
+    private String level;
     @OneToMany(mappedBy = "user")
     private Set<PartyAttendee> partyAttendees;
 }
