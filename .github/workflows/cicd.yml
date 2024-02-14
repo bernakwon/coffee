@@ -61,7 +61,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-9595")
+            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80")
             
             if [ ! -z "$CONTAINER_ID" ]; then
               sudo docker stop $CONTAINER_ID
