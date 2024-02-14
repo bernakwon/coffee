@@ -61,11 +61,13 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            sudo docker kill ${{ secrets.SERVER_NAME }}
-            sudo docker rm -f ${{ secrets.SERVER_NAME }}
-            sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-9595")
             
-            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-            --name ${{ secrets.SERVER_NAME }} \
-            -d ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            if [ ! -z "$CONTAINER_ID" ]; then
+              sudo docker stop $CONTAINER_ID
+              sudo docker rm $CONTAINER_ID
+            fi
+            
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            sudo docker run --name ${{ secrets.SERVER_NAME }} -d -p 80:9595 -e TZ=Asia/Seoul ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
+            
