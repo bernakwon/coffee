@@ -16,8 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class Orders {
     @Id
     private Long id;
-    @OneToOne
-    private Party party;
-
+    private Long partyId;
+    private Long cafeId;
+    private Long userId;
+    private Long menuId;
 
 }

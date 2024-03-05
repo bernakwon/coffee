@@ -1,5 +1,6 @@
 package com.dream.coffee.domain.info.repository;
 
+import com.dream.coffee.domain.info.dto.OrderStatusResponse;
 import com.dream.coffee.domain.info.dto.PartyInfoResponse;
 import com.dream.coffee.domain.info.entity.Party;
 import com.dream.coffee.domain.info.entity.PartyAttendee;
@@ -14,4 +15,8 @@ public interface PartyAttendeeRepository extends JpaRepository<PartyAttendee,Lon
     // Party ID를 기반으로 Party별 사용자 정보 조회
     @Query(value = "SELECT new com.dream.coffee.domain.info.dto.PartyInfoResponse(pa.party.partyId,pa.party.name,pa.party.endDt,pa.user.userId,pa.user.name) FROM PartyAttendee pa  join pa.user join pa.party WHERE pa.party.partyId = :partyId")
     List<PartyInfoResponse> findAttendeesByPartyId(@Param("partyId") Long partyId);
+
+/*
+    @Query(value = "SELECT new com.dream.coffee.domain.info.dto.OrderStatusResponse(pa.party.name,pa.party.endDt,pa.user.userId,pa.user.name) FROM PartyAttendee pa  join pa.user join pa.party join cafe WHERE pa.party.partyId = :partyId")
+    OrderStatusResponse findOrderStatusByPartyId(Long partyId);*/
 }
