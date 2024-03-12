@@ -9,4 +9,6 @@ public interface OrderService {
 
 
     Orders save(OrderSaveRequestParam orderSaveRequestParam);
+
+    MenuSelectUserResponse getMenuSelectUsers(MenuSelectUserRequestParam requestParam);
 }

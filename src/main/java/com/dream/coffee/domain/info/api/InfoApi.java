@@ -1,12 +1,11 @@
 package com.dream.coffee.domain.info.api;
 
-import com.dream.coffee.domain.info.dto.OrderStatusResponse;
-import com.dream.coffee.domain.info.dto.PartyDtlInfoResponse;
-import com.dream.coffee.domain.info.dto.UserResponse;
+import com.dream.coffee.domain.info.dto.*;
 import com.dream.coffee.domain.info.entity.Cafe;
 import com.dream.coffee.domain.info.service.cafe.CafeService;
 import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
+import com.dream.coffee.domain.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +17,7 @@ public class InfoApi {
 
     private final UserService userService;
     private final CafeService cafeService;
+    private final OrderService orderService;
 
     private final PartyService partyService;
     @GetMapping("/users")
@@ -41,6 +41,10 @@ public class InfoApi {
     }
 
 
+    @PostMapping("/order/users")
+    public MenuSelectUserResponse getMenuSelectUsers(@RequestBody MenuSelectUserRequestParam requestParam){
+        return orderService.getMenuSelectUsers(requestParam);
+    }
 
 
 }
