@@ -10,7 +10,6 @@ import com.dream.coffee.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -40,19 +39,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public MenuSelectUserResponse getMenuSelectUsers(MenuSelectUserRequestParam requestParam) {
+    public List<MenuSelectGroupUserResponse> getMenuSelectUsers(MenuSelectUserRequestParam requestParam) {
         Long menuId = requestParam.getMenuId();
         Long partyId = requestParam.getPartyId();
 
         List<MenuSelectUserResponse> list = orderRepository.getMenuSelectUsers(menuId,partyId);
-        MenuSelectGroupUserResponse response =  list.stream()
-                .collect(Collectors.groupingBy(i-> i.getMenuId())
+        List<MenuSelectGroupUserResponse> response = list.stream()
+                .collect(Collectors.groupingBy(i->Arrays.asList(i.getMenuId(),i.getMenuNm())))
                 .entrySet().stream()
-                .map(e -> new PartyDtlInfoResponse((Long) e.getKey().get(0), (String) e.getKey().get(1), (LocalDateTime) e.getKey().get(2),
-                        e.getValue().stream().map(i -> new UserResponse(i.getUserId(), i.getName())).collect(Collectors.toSet())
+                .map(e -> new MenuSelectGroupUserResponse((String) e.getKey().get(0), (String) e.getKey().get(1),(long) e.getValue().size(),
+                        e.getValue().stream().map(i -> new SelectUser(i.getUserNm(), i.getTelNo())).collect(Collectors.toSet())
                 ))
                 .collect(Collectors.toList());
-        return null;
+
+        return response;
     }
 
 

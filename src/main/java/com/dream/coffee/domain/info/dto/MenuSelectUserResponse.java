@@ -13,8 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 public class MenuSelectUserResponse {
 
-   private String menuNm;
-    private String menuId;
+
+    private Long menuId;
+    private String menuNm;
     private String userNm;
    private String telNo;
 

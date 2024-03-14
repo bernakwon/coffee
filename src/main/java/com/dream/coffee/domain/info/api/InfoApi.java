@@ -42,7 +42,7 @@ public class InfoApi {
 
 
     @PostMapping("/order/users")
-    public MenuSelectUserResponse getMenuSelectUsers(@RequestBody MenuSelectUserRequestParam requestParam){
+    public List<MenuSelectGroupUserResponse> getMenuSelectUsers(@RequestBody MenuSelectUserRequestParam requestParam){
         return orderService.getMenuSelectUsers(requestParam);
     }
 
