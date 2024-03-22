@@ -15,7 +15,7 @@ public class Party {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partyId;
-    private String cafeId;
+    private Long cafeId;
     private String name;
     private LocalDateTime endDt;
 

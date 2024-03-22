@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @AllArgsConstructor
@@ -21,5 +22,12 @@ public class OrderStatusResponse {
     private int orderDrinkCount;
     private int orderTagerDrinkCount;
     private int orderState;
-    private List<OrderMenuCountReponse> orderMenuInfoList;
+    private Set<OrderMenuCountReponse> orderMenuInfoList;
+
+    public OrderStatusResponse(String partyName, String cafeNm, String endDt, Set<OrderMenuCountReponse> orderMenuInfoList) {
+        this.partyName = partyName;
+        this.cafeNm = cafeNm;
+        this.endDt = endDt;
+        this.orderMenuInfoList = orderMenuInfoList;
+    }
 }

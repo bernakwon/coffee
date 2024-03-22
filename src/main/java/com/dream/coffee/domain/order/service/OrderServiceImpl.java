@@ -3,6 +3,7 @@ package com.dream.coffee.domain.order.service;
 import com.dream.coffee.domain.info.dto.*;
 import com.dream.coffee.domain.info.repository.PartyAttendeeRepository;
 import com.dream.coffee.domain.info.repository.UsersRepository;
+import com.dream.coffee.domain.order.dto.OrderPureInfo;
 import com.dream.coffee.domain.order.entity.Orders;
 import com.dream.coffee.domain.order.repository.OrderRepository;
 import com.dream.coffee.global.error.CommonException;
@@ -55,5 +56,17 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
+    @Override
+    public OrderStatusResponse getOrderStatusByParty(Long partyId) {
 
+        List<OrderPureInfo> pureData = orderRepository.findOrderStatusByPartyId(partyId);
+     /*   pureData.stream()
+                .collect(Collectors.groupingBy(i->Arrays.asList(i.getPartyName(),i.getCafeNm(),i.getEndDt())))
+                .entrySet().stream()
+                .map(e -> new OrderStatusResponse((String) e.getKey().get(0), (String) e.getKey().get(1),e.getValue().size()
+                        e.getValue().stream().map(i -> new OrderMenuCountReponse(i.getMenuId(), i.getMenuNm())).collect(Collectors.toSet())
+                ))
+                .collect(Collectors.toList());*/
+        return null;
+    }
 }

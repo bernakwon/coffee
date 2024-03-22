@@ -62,11 +62,5 @@ public class PartyServiceImpl implements PartyService {
         return infoResponse;
     }
 
-    @Override
-    public OrderStatusResponse getOrderStatusByParty(Long partyId) {
 
-       // OrderStatusResponse statusResponse = partyAttendeeRepository.findOrderStatusByPartyId(partyId);
-
-        return null;
-    }
 }

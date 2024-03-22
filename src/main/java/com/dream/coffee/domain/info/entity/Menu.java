@@ -8,7 +8,9 @@ import lombok.*;
 @Getter
 @Builder
 @Entity
+@IdClass(MenuIdPK.class)
 public class Menu {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Id

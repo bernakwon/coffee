@@ -1,9 +1,7 @@
 package com.dream.coffee.domain.order.entity;
 
 import com.dream.coffee.domain.info.entity.Party;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -15,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Entity
 public class Orders {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long partyId;
     private Long cafeId;

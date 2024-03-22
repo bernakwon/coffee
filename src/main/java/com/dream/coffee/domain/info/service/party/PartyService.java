@@ -12,5 +12,5 @@ public interface PartyService{
 
     List<PartyDtlInfoResponse> getById(Long partyId);
 
-    OrderStatusResponse getOrderStatusByParty(Long partyId);
+
 }

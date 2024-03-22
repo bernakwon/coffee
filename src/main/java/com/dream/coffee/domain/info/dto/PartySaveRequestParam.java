@@ -44,7 +44,7 @@ public class PartySaveRequestParam {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
         Party party =  Party.builder()
                 .name(partyName)
-                .cafeId(cafeId)
+                .cafeId(Long.valueOf(cafeId))
                 .endDt(LocalDateTime.parse(endDate+endTime,dateTimeFormatter))
                 .build();
         List<PartyAttendee> partyAttendees = new ArrayList<>();
