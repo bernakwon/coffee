@@ -9,12 +9,14 @@ import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.order.entity.Orders;
 import com.dream.coffee.domain.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SaveApi {
 
     private final PartyService partyService;

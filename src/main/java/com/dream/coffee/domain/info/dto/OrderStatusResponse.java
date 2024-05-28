@@ -30,4 +30,6 @@ public class OrderStatusResponse {
         this.endDt = endDt;
         this.orderMenuInfoList = orderMenuInfoList;
     }
+
+
 }

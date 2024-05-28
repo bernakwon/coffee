@@ -12,5 +12,10 @@ public class OrderMenuCountReponse {
 
     private String menuNm;
     private long orderCount;
-    private String menuId;
+    private Long menuId;
+
+    public OrderMenuCountReponse(Long menuId, String menuNm) {
+        this.menuNm = menuNm;
+        this.menuId = menuId;
+    }
 }
