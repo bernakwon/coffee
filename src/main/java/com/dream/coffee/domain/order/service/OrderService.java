@@ -12,5 +12,5 @@ public interface OrderService {
 
     List<MenuSelectGroupUserResponse> getMenuSelectUsers(MenuSelectUserRequestParam requestParam);
 
-    OrderStatusResponse getOrderStatusByParty(Long partyId);
+    List<OrderStatusResponse> getOrderStatusByParty(Long partyId);
 }

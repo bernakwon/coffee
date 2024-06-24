@@ -11,9 +11,12 @@ import com.dream.coffee.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,16 +60,45 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderStatusResponse getOrderStatusByParty(Long partyId) {
+    public  List<OrderStatusResponse>  getOrderStatusByParty(Long partyId) {
 
         List<OrderPureInfo> pureData = orderRepository.findOrderStatusByPartyId(partyId);
-     /*   pureData.stream()
-                .collect(Collectors.groupingBy(i->Arrays.asList(i.getPartyName(),i.getCafeNm(),i.getEndDt())))
+
+        // Grouping the data
+        List<OrderStatusResponse> responseList = pureData.stream()
+                .collect(Collectors.groupingBy(i -> Arrays.asList(i.getPartyName(), i.getCafeNm(), i.getEndDt())))
                 .entrySet().stream()
-                .map(e -> new OrderStatusResponse((String) e.getKey().get(0), (String) e.getKey().get(1),e.getValue().size()
-                        e.getValue().stream().map(i -> new OrderMenuCountReponse(i.getMenuId(), i.getMenuNm())).collect(Collectors.toSet())
-                ))
-                .collect(Collectors.toList());*/
-        return null;
+                .map(e -> {
+                    String partyName = (String) e.getKey().get(0);
+                    String cafeNm = (String) e.getKey().get(1);
+                    LocalDateTime endDt = (LocalDateTime) e.getKey().get(2);
+                    Set<OrderMenuCountReponse> orderMenuInfoList = e.getValue().stream()
+                            .map(i -> new OrderMenuCountReponse(i.getMenuId(), i.getMenuNm(),0))
+                            .collect(Collectors.toSet());
+
+
+                    Long userCount = e.getValue().get(0).getUserCount();
+                    Long drinkCount = e.getValue().get(0).getDrinkCount();
+                    boolean orderState = endDt.isAfter(LocalDateTime.now());
+                    // Placeholder values for other counts (you can implement specific logic if needed)
+                    int orderUserCount = userCount.intValue();
+                    Long orderTagerUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId);
+                    int orderDrinkCount = drinkCount.intValue();
+                    Long orderTagerDrinkCount = orderRepository.countOrdersByPartyAndAttendees(partyId);
+                    return new OrderStatusResponse(
+                            partyName,
+                            cafeNm,
+                           endDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
+                            orderUserCount,
+                            orderTagerUserCount.intValue(),
+                            orderDrinkCount,
+                            orderTagerDrinkCount.intValue(),
+                            orderState,
+                            orderMenuInfoList
+                    );
+                })
+                .collect(Collectors.toList());
+
+        return responseList;
     }
 }

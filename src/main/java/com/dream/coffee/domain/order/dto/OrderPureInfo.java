@@ -15,5 +15,8 @@ public class OrderPureInfo {
     private LocalDateTime endDt;//(party)
     private Long menuId;
     private String menuNm;
+    private Long userCount;
+    private Long drinkCount;
+
 
 }

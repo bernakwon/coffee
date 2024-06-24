@@ -8,13 +8,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderMenuCountReponse {
-
-
-
-    private Long menuId;
+public class PartyMenuInfo {
+    private String menuId;
     private String menuNm;
-    private long orderCount;
-
 
 }
