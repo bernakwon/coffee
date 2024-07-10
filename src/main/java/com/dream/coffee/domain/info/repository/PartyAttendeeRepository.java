@@ -17,7 +17,6 @@ public interface PartyAttendeeRepository extends JpaRepository<PartyAttendee,Lon
             "FROM PartyAttendee pa  join pa.user join pa.party WHERE pa.party.partyId = :partyId")
     List<PartyInfoResponse> findAttendeesByPartyId(@Param("partyId") Long partyId);
 
-/*
-    @Query(value = "SELECT new com.dream.coffee.domain.info.dto.OrderStatusResponse(pa.party.name,pa.party.endDt,pa.user.userId,pa.user.name) FROM PartyAttendee pa  join pa.user join pa.party join cafe WHERE pa.party.partyId = :partyId")
-    OrderStatusResponse findOrderStatusByPartyId(Long partyId);*/
+    @Query("SELECT COUNT(pa) FROM PartyAttendee pa WHERE pa.party.partyId = :partyId")
+    Long countAttendeesByPartyId(@Param("partyId") Long partyId);
 }

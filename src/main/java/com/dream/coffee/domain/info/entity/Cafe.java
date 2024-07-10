@@ -10,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
 @Builder
 @Entity
 public class Cafe {

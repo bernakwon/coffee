@@ -12,6 +12,7 @@ import com.dream.coffee.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -31,6 +32,11 @@ public class MenuServiceImpl implements MenuService {
         Menu menu = Menu.builder().cafeId(menuSaveRequestParam.getCafeId()).name(menuSaveRequestParam.getMenuNm()).build();
         Menu newMenu = menuRepository.save(menu);
         return !Objects.isNull(newMenu)?newMenu.getId():null;
+    }
+
+    @Override
+    public List<Menu> getMenus(String cafeId) {
+        return menuRepository.findMenusByCafeId(cafeId);
     }
 
 

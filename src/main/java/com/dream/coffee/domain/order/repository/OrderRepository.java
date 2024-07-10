@@ -27,4 +27,9 @@ public interface OrderRepository extends JpaRepository<Orders,Long>  {
             "left join Menu m on o.menuId=m.id " +
             "where o.partyId=:partyId")
     List<OrderPureInfo> findOrderStatusByPartyId(@Param("partyId") Long partyId);
+
+    @Query("SELECT COUNT(o) FROM Orders o " +
+            "WHERE o.partyId = :partyId AND o.userId IN " +
+            "(SELECT pa.user.userId FROM PartyAttendee pa WHERE pa.party.partyId = :partyId )")
+    Long countOrdersByPartyAndAttendees(@Param("partyId") Long partyId);
 }

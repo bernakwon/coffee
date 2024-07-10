@@ -14,22 +14,15 @@ import java.util.Set;
 public class OrderStatusResponse {
 
 
-    private String partyName;//파티명(party)
-    private String cafeNm;//카페명(파티랑 조인 cafe)
-    private String endDt;//(party)
+    private String partyName; // 파티명(party)
+    private String cafeNm; // 카페명(파티랑 조인 cafe)
+    private String endDt; // (party)
     private int orderUserCount;
     private int orderTagerUserCount;
     private int orderDrinkCount;
     private int orderTagerDrinkCount;
-    private int orderState;
+    private boolean orderState;
     private Set<OrderMenuCountReponse> orderMenuInfoList;
-
-    public OrderStatusResponse(String partyName, String cafeNm, String endDt, Set<OrderMenuCountReponse> orderMenuInfoList) {
-        this.partyName = partyName;
-        this.cafeNm = cafeNm;
-        this.endDt = endDt;
-        this.orderMenuInfoList = orderMenuInfoList;
-    }
 
 
 }

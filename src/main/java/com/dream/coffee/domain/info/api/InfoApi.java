@@ -2,7 +2,9 @@ package com.dream.coffee.domain.info.api;
 
 import com.dream.coffee.domain.info.dto.*;
 import com.dream.coffee.domain.info.entity.Cafe;
+import com.dream.coffee.domain.info.entity.Menu;
 import com.dream.coffee.domain.info.service.cafe.CafeService;
+import com.dream.coffee.domain.info.service.menu.MenuService;
 import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
 import com.dream.coffee.domain.order.service.OrderService;
@@ -20,6 +22,7 @@ public class InfoApi {
     private final UserService userService;
     private final CafeService cafeService;
     private final OrderService orderService;
+    private final MenuService menuService;
 
     private final PartyService partyService;
     @GetMapping("/users")
@@ -48,5 +51,10 @@ public class InfoApi {
         return orderService.getMenuSelectUsers(requestParam);
     }
 
+
+    @GetMapping("/menu/info/{cafeId}")
+    public List<Menu> getMenu(@PathVariable("cafeId") String cafeId){
+    return menuService.getMenus(cafeId);
+    } 
 
 }
