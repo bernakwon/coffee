@@ -11,9 +11,9 @@ import com.dream.coffee.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,10 +69,19 @@ public class OrderServiceImpl implements OrderService {
                     String partyName = (String) e.getKey().get(0);
                     String cafeNm = (String) e.getKey().get(1);
                     LocalDateTime endDt = (LocalDateTime) e.getKey().get(2);
-                    Set<OrderMenuCountReponse> orderMenuInfoList = e.getValue().stream()
-                            .map(i -> new OrderMenuCountReponse(i.getMenuId(), i.getMenuNm(),0))
-                            .collect(Collectors.toSet());
+                    // 메뉴별 그룹화
+                    Map<Long, List<OrderPureInfo>> menuGroup = e.getValue().stream()
+                            .collect(Collectors.groupingBy(OrderPureInfo::getMenuId));
 
+                    // 각 메뉴별 주문 수 계산 및 OrderMenuCountReponse 생성
+                    Set<OrderMenuCountReponse> orderMenuInfoList = menuGroup.entrySet().stream()
+                            .map(entry -> {
+                                Long menuId = entry.getKey();
+                                String menuName = entry.getValue().get(0).getMenuNm();
+                                int orderCount = entry.getValue().size();
+                                return new OrderMenuCountReponse(menuId, menuName, orderCount);
+                            })
+                            .collect(Collectors.toSet());
 
                     Long userCount = e.getValue().get(0).getUserCount();
                     Long drinkCount = e.getValue().get(0).getDrinkCount();

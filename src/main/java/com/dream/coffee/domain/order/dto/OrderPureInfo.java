@@ -19,9 +19,4 @@ public class OrderPureInfo {
     private Long userCount;
     private Long drinkCount;
 
-
-    public String getEndDt() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return  endDt.format(formatter);
-    }
 }
