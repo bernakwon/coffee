@@ -16,7 +16,7 @@ import java.util.List;
 public class Cafe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    private Long cafeId;
+    private String cafeName;
 
 }

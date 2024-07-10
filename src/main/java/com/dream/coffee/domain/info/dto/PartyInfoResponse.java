@@ -18,5 +18,10 @@ public class PartyInfoResponse {
     private LocalDateTime endDt;
     private Long userId;
     private String name;
+    private String department;
+    private String team;
+    private String rank;
+    private String telNo;
+
 
 }

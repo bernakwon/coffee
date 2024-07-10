@@ -21,9 +21,9 @@ public interface OrderRepository extends JpaRepository<Orders,Long>  {
             "and o.partyId=:partyId")
     List<MenuSelectUserResponse> getMenuSelectUsers(@Param("menuId") Long menuId,@Param("partyId") Long partyId);
 
-    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name,c.name,p.endDt,o.menuId,m.name) from Orders o " +
+    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name,c.cafeName,p.endDt,o.menuId,m.name) from Orders o " +
             "left join Party p on p.partyId=o.partyId " +
-            "left join Cafe c on o.cafeId=c.id " +
+            "left join Cafe c on o.cafeId=c.cafeId " +
             "left join Menu m on o.menuId=m.id " +
             "where o.partyId=:partyId")
     List<OrderPureInfo> findOrderStatusByPartyId(@Param("partyId") Long partyId);

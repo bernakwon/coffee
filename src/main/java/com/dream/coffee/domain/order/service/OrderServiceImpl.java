@@ -57,16 +57,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderStatusResponse getOrderStatusByParty(Long partyId) {
+    public List<OrderStatusResponse> getOrderStatusByParty(Long partyId) {
 
         List<OrderPureInfo> pureData = orderRepository.findOrderStatusByPartyId(partyId);
-        pureData.stream()
+        List<OrderStatusResponse> result = pureData.stream()
                 .collect(Collectors.groupingBy(i->Arrays.asList(i.getPartyName(),i.getCafeNm(),i.getEndDt())))
                 .entrySet().stream()
                 .map(e -> new OrderStatusResponse((String) e.getKey().get(0), (String) e.getKey().get(1), (String) e.getKey().get(2),
                         e.getValue().stream().map(i -> new OrderMenuCountReponse(i.getMenuId(), i.getMenuNm())).collect(Collectors.toSet())
                 ))
                 .collect(Collectors.toList());
-        return null;
+        return result;
     }
 }

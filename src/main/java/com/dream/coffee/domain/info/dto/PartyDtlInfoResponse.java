@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,7 +16,9 @@ public class PartyDtlInfoResponse {
 
     private Long partyId;
     private String partyName;
-    private LocalDateTime endDt;
-    private Set<UserResponse> users;
+    private String endDt;
+    private int allUserCount;
+    private int completedOrderUserCount;
+    private List<OrderMenuInfo> orderMenuList;
 
 }

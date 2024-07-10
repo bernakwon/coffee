@@ -38,7 +38,7 @@ public class InfoApi {
     }
 
     @PostMapping("/order/status/{partyId}")
-    public OrderStatusResponse getOrderStatusByParty(@PathVariable("partyId") Long partyId){
+    public List<OrderStatusResponse> getOrderStatusByParty(@PathVariable("partyId") Long partyId){
         return orderService.getOrderStatusByParty(partyId);
     }
 

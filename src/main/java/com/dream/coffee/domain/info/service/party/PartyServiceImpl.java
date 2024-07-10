@@ -52,14 +52,14 @@ public class PartyServiceImpl implements PartyService {
     public List<PartyDtlInfoResponse> getById(Long partyId) {
 
         List<PartyInfoResponse> attendees = partyAttendeeRepository.findAttendeesByPartyId(partyId);
-        List<PartyDtlInfoResponse> infoResponse = attendees.stream()
+       /* List<PartyDtlInfoResponse> infoResponse = attendees.stream()
                 .collect(Collectors.groupingBy(i -> Arrays.asList(i.getPartyId(), i.getPartyName(),i.getEndDt())))
                 .entrySet().stream()
                 .map(e -> new PartyDtlInfoResponse((Long) e.getKey().get(0), (String) e.getKey().get(1), (LocalDateTime) e.getKey().get(2),
                         e.getValue().stream().map(i -> new UserResponse(i.getUserId(), i.getName())).collect(Collectors.toSet())
                    ))
-                .collect(Collectors.toList());
-        return infoResponse;
+                .collect(Collectors.toList());*/
+        return null;
     }
 
 

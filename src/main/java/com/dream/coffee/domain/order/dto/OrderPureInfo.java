@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @AllArgsConstructor
@@ -16,4 +17,8 @@ public class OrderPureInfo {
     private Long menuId;
     private String menuNm;
 
+    public String getEndDt() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return  endDt.format(formatter);
+    }
 }
