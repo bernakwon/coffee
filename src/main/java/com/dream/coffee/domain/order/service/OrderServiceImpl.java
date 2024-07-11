@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
         List<MenuSelectGroupUserResponse> response = list.stream()
                 .collect(Collectors.groupingBy(i->Arrays.asList(i.getMenuId(),i.getMenuNm())))
                 .entrySet().stream()
-                .map(e -> new MenuSelectGroupUserResponse((String) e.getKey().get(0), (String) e.getKey().get(1),(long) e.getValue().size(),
+                .map(e -> new MenuSelectGroupUserResponse( e.getKey().get(0).toString(), e.getKey().get(1).toString(),(long) e.getValue().size(),
                         e.getValue().stream().map(i -> new SelectUser(i.getUserNm(), i.getTelNo())).collect(Collectors.toSet())
                 ))
                 .collect(Collectors.toList());
