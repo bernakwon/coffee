@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MenuRepository extends JpaRepository<Menu,Long> {
-    @Query("SELECT m FROM Menu m WHERE m.cafeId = :cafeId")
-    List<Menu> findMenusByCafeId(@Param("cafeId") String cafeId);
+    @Query("SELECT m FROM Menu m WHERE m.cafeId = (SELECT p.cafeId FROM Party p WHERE p.id = :partyId)")
+    List<Menu> findMenusByPartyId(@Param("partyId") String partyId);
 }

@@ -19,9 +19,9 @@ public class OrderStatusResponse {
     private String cafeNm; // 카페명(파티랑 조인 cafe)
     private String endDt; // (party)
     private int orderUserCount;
-    private int orderTagerUserCount;
+    private int orderTargetUserCount;
     private int orderDrinkCount;
-    private int orderTagerDrinkCount;
+    private int orderTargetDrinkCount;
     private boolean orderState;
     private Set<OrderMenuCountReponse> orderMenuInfoList;
 

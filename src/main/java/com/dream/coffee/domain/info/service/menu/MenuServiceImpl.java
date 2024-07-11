@@ -35,8 +35,8 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> getMenus(String cafeId) {
-        return menuRepository.findMenusByCafeId(cafeId);
+    public List<Menu> getMenus(String partyId) {
+        return menuRepository.findMenusByPartyId(partyId);
     }
 
 

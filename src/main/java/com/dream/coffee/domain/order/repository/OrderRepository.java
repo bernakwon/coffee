@@ -2,6 +2,7 @@ package com.dream.coffee.domain.order.repository;
 
 import com.dream.coffee.domain.info.dto.MenuSelectUserResponse;
 import com.dream.coffee.domain.info.dto.OrderStatusResponse;
+import com.dream.coffee.domain.info.dto.OrderedUserResponse;
 import com.dream.coffee.domain.info.entity.Cafe;
 import com.dream.coffee.domain.order.dto.OrderPureInfo;
 import com.dream.coffee.domain.order.entity.Orders;
@@ -21,18 +22,23 @@ public interface OrderRepository extends JpaRepository<Orders,Long>  {
             "and o.partyId=:partyId")
     List<MenuSelectUserResponse> getMenuSelectUsers(@Param("menuId") Long menuId,@Param("partyId") Long partyId);
 
-    @Query(value = "select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, m.name, " +
-            "(select count(u) from Users u where u.userId = o.userId), " +  // Assuming userCount is derived from User table
-            "(select count(d) from Menu d where d.id = o.menuId))" +  // Assuming drinkCount is derived from menu table
+    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, m.name, COUNT(DISTINCT o.userId), COUNT(o.menuId)) " +
             "from Orders o " +
             "left join Party p on p.partyId = o.partyId " +
             "left join Cafe c on o.cafeId = c.cafeId " +
             "left join Menu m on o.menuId = m.id " +
-            "where o.partyId = :partyId")
+            "where o.partyId = :partyId " +
+            "group by p.name, c.cafeName, p.endDt, o.menuId, m.name")
     List<OrderPureInfo> findOrderStatusByPartyId(@Param("partyId") Long partyId);
 
     @Query("SELECT COUNT(o) FROM Orders o " +
             "WHERE o.partyId = :partyId AND o.userId IN " +
             "(SELECT pa.user.userId FROM PartyAttendee pa WHERE pa.party.partyId = :partyId )")
     Long countOrdersByPartyAndAttendees(@Param("partyId") Long partyId);
+
+    @Query("select new com.dream.coffee.domain.info.dto.OrderedUserResponse(u.userId, u.name, u.team, u.department, u.level, u.telNo) " +
+            "from Orders o " +
+            "left join Users u on o.userId = u.userId " +
+            "where o.partyId = :partyId and o.menuId = :menuId")
+    List<OrderedUserResponse> findUsersByPartyIdAndMenuId(@Param("partyId") Long partyId, @Param("menuId") Long menuId);
 }

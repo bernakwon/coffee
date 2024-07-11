@@ -40,8 +40,8 @@ public class InfoApi {
         return partyService.getById(partyId);
     }
 
-    @PostMapping("/order/status/{partyId}")
-    public List<OrderStatusResponse> getOrderStatusByParty(@PathVariable("partyId") Long partyId){
+    @GetMapping("/order/status/{partyId}")
+    public OrderStatusResponse getOrderStatusByParty(@PathVariable("partyId") Long partyId){
         return orderService.getOrderStatusByParty(partyId);
     }
 
@@ -52,9 +52,9 @@ public class InfoApi {
     }
 
 
-    @GetMapping("/menu/info/{cafeId}")
-    public List<Menu> getMenu(@PathVariable("cafeId") String cafeId){
-    return menuService.getMenus(cafeId);
+    @GetMapping("/menu/info/{partyId}")
+    public List<Menu> getMenu(@PathVariable("partyId") String partyId){
+    return menuService.getMenus(partyId);
     } 
 
 }

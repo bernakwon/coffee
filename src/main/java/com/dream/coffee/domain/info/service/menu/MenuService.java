@@ -8,5 +8,5 @@ import java.util.List;
 public interface MenuService {
     Long save(MenuSaveRequestParam menuSaveRequestParam);
 
-    List<Menu> getMenus(String cafeId);
+    List<Menu> getMenus(String partyId);
 }
