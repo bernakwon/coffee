@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
         List<MenuSelectGroupUserResponse> response = list.stream()
                 .collect(Collectors.groupingBy(i->Arrays.asList(i.getMenuId(),i.getMenuNm())))
                 .entrySet().stream()
-                .map(e -> new MenuSelectGroupUserResponse( e.getKey().get(0).toString(), e.getKey().get(1).toString(),(long) e.getValue().size(),
+                .map(e -> new MenuSelectGroupUserResponse((String) e.getKey().get(0), (String) e.getKey().get(1),(long) e.getValue().size(),
                         e.getValue().stream().map(i -> new SelectUser(i.getUserNm(), i.getTelNo())).collect(Collectors.toSet())
                 ))
                 .collect(Collectors.toList());
@@ -57,54 +57,58 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public  List<OrderStatusResponse>  getOrderStatusByParty(Long partyId) {
+    public  OrderStatusResponse getOrderStatusByParty(Long partyId) {
 
         List<OrderPureInfo> pureData = orderRepository.findOrderStatusByPartyId(partyId);
 
-        // Grouping the data
-        List<OrderStatusResponse> responseList = pureData.stream()
+        OrderStatusResponse response = pureData.stream()
                 .collect(Collectors.groupingBy(i -> Arrays.asList(i.getPartyName(), i.getCafeNm(), i.getEndDt())))
                 .entrySet().stream()
                 .map(e -> {
                     String partyName = (String) e.getKey().get(0);
                     String cafeNm = (String) e.getKey().get(1);
                     LocalDateTime endDt = (LocalDateTime) e.getKey().get(2);
-                    // 메뉴별 그룹화
                     Map<Long, List<OrderPureInfo>> menuGroup = e.getValue().stream()
                             .collect(Collectors.groupingBy(OrderPureInfo::getMenuId));
 
-                    // 각 메뉴별 주문 수 계산 및 OrderMenuCountReponse 생성
                     Set<OrderMenuCountReponse> orderMenuInfoList = menuGroup.entrySet().stream()
                             .map(entry -> {
                                 Long menuId = entry.getKey();
                                 String menuName = entry.getValue().get(0).getMenuNm();
                                 int orderCount = entry.getValue().size();
-                                return new OrderMenuCountReponse(menuId, menuName, orderCount);
+
+                                List<OrderedUserResponse> users = orderRepository.findUsersByPartyIdAndMenuId(partyId, menuId);
+
+                                return new OrderMenuCountReponse(menuId, menuName, orderCount, users);
                             })
                             .collect(Collectors.toSet());
+
 
                     Long userCount = e.getValue().get(0).getUserCount();
                     Long drinkCount = e.getValue().get(0).getDrinkCount();
                     boolean orderState = endDt.isAfter(LocalDateTime.now());
+
                     // Placeholder values for other counts (you can implement specific logic if needed)
                     int orderUserCount = userCount.intValue();
-                    Long orderTagerUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId);
+                    Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId);
                     int orderDrinkCount = drinkCount.intValue();
-                    Long orderTagerDrinkCount = orderRepository.countOrdersByPartyAndAttendees(partyId);
+                    Long orderTargetDrinkCount = orderRepository.countOrdersByPartyAndAttendees(partyId);
+
                     return new OrderStatusResponse(
                             partyName,
                             cafeNm,
-                           endDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
+                            endDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")),
                             orderUserCount,
-                            orderTagerUserCount.intValue(),
+                            orderTargetUserCount.intValue(),
                             orderDrinkCount,
-                            orderTagerDrinkCount.intValue(),
+                            orderTargetDrinkCount.intValue(),
                             orderState,
                             orderMenuInfoList
                     );
                 })
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElse(null);
 
-        return responseList;
+        return response;
     }
 }
