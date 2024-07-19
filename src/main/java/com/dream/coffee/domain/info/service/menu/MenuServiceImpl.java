@@ -1,7 +1,6 @@
 package com.dream.coffee.domain.info.service.menu;
 
 import com.dream.coffee.domain.info.dto.*;
-import com.dream.coffee.domain.info.entity.Cafe;
 import com.dream.coffee.domain.info.entity.Menu;
 import com.dream.coffee.domain.info.repository.MenuRepository;
 import com.dream.coffee.domain.info.repository.PartyAttendeeRepository;
@@ -10,9 +9,11 @@ import com.dream.coffee.domain.info.repository.UsersRepository;
 import com.dream.coffee.global.error.CommonException;
 import com.dream.coffee.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -35,8 +36,9 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> getMenus(String partyId) {
-        return menuRepository.findMenusByPartyId(partyId);
+    public Page<Menu> getMenus(String partyId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return menuRepository.findMenusByPartyId(partyId, pageable);
     }
 
 

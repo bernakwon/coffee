@@ -9,6 +9,7 @@ import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
 import com.dream.coffee.domain.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,9 +53,9 @@ public class InfoApi {
     }
 
 
-    @GetMapping("/menu/info/{partyId}")
-    public List<Menu> getMenu(@PathVariable("partyId") String partyId){
-    return menuService.getMenus(partyId);
+    @GetMapping("/menu/info/{partyId}/{page}/{size}")
+    public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@PathVariable("page") int page,@PathVariable("size") int size){
+    return menuService.getMenus(partyId,page,size);
     } 
 
 }
