@@ -9,5 +9,5 @@ import java.util.List;
 public interface MenuService {
     Long save(MenuSaveRequestParam menuSaveRequestParam);
 
-    Page<Menu> getMenus(String partyId, int page, int size);
+    Page<Menu> getMenus(String partyId, int page, String searchTag);
 }

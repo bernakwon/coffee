@@ -36,8 +36,8 @@ public class InfoApi {
     @Operation(summary = "카페 목록 조회(페이징)")
     @GetMapping("/cafe/info")
     public Page<Cafe> getCafeList(@RequestParam("page") int page){
-        int size = 10;
-        return cafeService.getAllCafe(page,size);
+
+        return cafeService.getAllCafe(page, 10);
     }
 
     @Operation(summary = "파티 목록 조회")
@@ -60,9 +60,9 @@ public class InfoApi {
 
     @Operation(summary = "파티별 메뉴목록 조회(페이징)")
     @GetMapping("/menu/info/{partyId}")
-    public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@RequestParam("page") int page){
-        int size = 10;
-    return menuService.getMenus(partyId,page,size);
+    public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@RequestParam("page") int page,@RequestParam("searchTag")  String searchTag){
+
+    return menuService.getMenus(partyId,page,searchTag);
     }
 
     @Operation(summary = "파티별 사용자목록(주문여부 포함) 조회")

@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MenuRepository extends JpaRepository<Menu,Long> {
-    @Query("SELECT m FROM Menu m WHERE m.cafeId = (SELECT p.cafeId FROM Party p WHERE p.partyId = :partyId)")
-    Page<Menu> findMenusByPartyId(@Param("partyId") String partyId, Pageable pageable);
+    //tag가 없을때 전체 메뉴를 가져옴
+    @Query("SELECT m FROM Menu m WHERE m.cafeId = (SELECT p.cafeId FROM Party p WHERE p.partyId = :partyId) " +
+            "AND (:tag IS NULL OR m.nameTag LIKE %:tag%)")
+    Page<Menu> findMenusByPartyId(@Param("partyId") String partyId,@Param("tag") String tag, Pageable pageable);
 }

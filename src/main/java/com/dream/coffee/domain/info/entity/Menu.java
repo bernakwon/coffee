@@ -17,4 +17,6 @@ public class Menu {
     private Long cafeId;
     private String name;
 
+    private String nameTag;
+
 }
