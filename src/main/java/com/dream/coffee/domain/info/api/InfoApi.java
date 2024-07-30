@@ -52,7 +52,7 @@ public class InfoApi {
         return orderService.getOrderStatusByParty(partyId);
     }
 
-    @Operation(summary = "메뉴 선택한 사용자 목록 포함한 메뉴목록 조회")
+    @Operation(summary = "메뉴 선택한 사용자 목록 포함한 메뉴목록 조회(사용여부 확인 필요")
     @PostMapping("/order/users")
     public List<MenuSelectGroupUserResponse> getMenuSelectUsers(@RequestBody MenuSelectUserRequestParam requestParam){
         return orderService.getMenuSelectUsers(requestParam);
@@ -63,6 +63,11 @@ public class InfoApi {
     public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@RequestParam("page") int page){
         int size = 10;
     return menuService.getMenus(partyId,page,size);
-    } 
+    }
 
+    @Operation(summary = "파티별 사용자목록(주문여부 포함) 조회")
+    @GetMapping("/order/users/{partyId}")
+    public List<PartyUserDetailsResponse> getUserDetailByParty(@PathVariable("partyId") Long partyId){
+        return orderService.getUserDetailByParty(partyId);
+    }
 }

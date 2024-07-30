@@ -111,4 +111,32 @@ public class OrderServiceImpl implements OrderService {
 
         return response;
     }
+
+    @Override
+    public List<PartyUserDetailsResponse> getUserDetailByParty(Long partyId) {
+
+
+        List<MenuSelectUserByPartyResponse> list = orderRepository.getUsersByPartyIdWithOrderStatus(partyId);
+        String partyName = list.isEmpty() ? "Unknown Party" : list.get(0).getPartyName();
+
+        List<PartyUserDetailsResponse> response = list.stream()
+                .collect(Collectors.groupingBy(MenuSelectUserByPartyResponse::getPartyId))
+                .entrySet().stream()
+                .map(e -> new PartyUserDetailsResponse(
+                        e.getKey(),
+                        partyName,
+                        (long) e.getValue().size(),
+                        e.getValue().stream()
+                                .map(i -> new PartySelectUserResponse(
+                                        i.getName(),
+                                        i.getTeam(),
+                                        i.getDepartment(),
+                                        i.getRank(),
+                                        i.isOrderComplete()))
+                                .collect(Collectors.toSet())
+                ))
+                .collect(Collectors.toList());
+
+        return response;
+    }
 }
