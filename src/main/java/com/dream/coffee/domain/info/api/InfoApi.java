@@ -8,6 +8,7 @@ import com.dream.coffee.domain.info.service.menu.MenuService;
 import com.dream.coffee.domain.info.service.party.PartyService;
 import com.dream.coffee.domain.info.service.users.UserService;
 import com.dream.coffee.domain.order.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -26,35 +27,41 @@ public class InfoApi {
     private final MenuService menuService;
 
     private final PartyService partyService;
+    @Operation(summary = "사용자 목록 조회")
     @GetMapping("/users")
     public List<UserResponse> getList(){
 
         return userService.getAllUsers();
     }
+    @Operation(summary = "카페 목록 조회(페이징)")
     @GetMapping("/cafe/info")
-    public List<Cafe> getCafeList(){
-        return cafeService.getAllCafe();
+    public Page<Cafe> getCafeList(@RequestParam("page") int page){
+        int size = 10;
+        return cafeService.getAllCafe(page,size);
     }
 
+    @Operation(summary = "파티 목록 조회")
     @GetMapping("/party/info/{partyId}")
     public List<PartyDtlInfoResponse> getPartyList(@PathVariable("partyId") Long partyId){
         return partyService.getById(partyId);
     }
 
+    @Operation(summary = "주문자 주문현황 조회")
     @GetMapping("/order/status/{partyId}")
     public OrderStatusResponse getOrderStatusByParty(@PathVariable("partyId") Long partyId){
         return orderService.getOrderStatusByParty(partyId);
     }
 
-
+    @Operation(summary = "메뉴 선택한 사용자 목록 포함한 메뉴목록 조회")
     @PostMapping("/order/users")
     public List<MenuSelectGroupUserResponse> getMenuSelectUsers(@RequestBody MenuSelectUserRequestParam requestParam){
         return orderService.getMenuSelectUsers(requestParam);
     }
 
-
-    @GetMapping("/menu/info/{partyId}/{page}/{size}")
-    public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@PathVariable("page") int page,@PathVariable("size") int size){
+    @Operation(summary = "파티별 메뉴목록 조회(페이징)")
+    @GetMapping("/menu/info/{partyId}")
+    public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@RequestParam("page") int page){
+        int size = 10;
     return menuService.getMenus(partyId,page,size);
     } 
 
