@@ -128,6 +128,7 @@ public class OrderServiceImpl implements OrderService {
                         (long) e.getValue().size(),
                         e.getValue().stream()
                                 .map(i -> new PartySelectUserResponse(
+                                        i.getUserId(),
                                         i.getName(),
                                         i.getTeam(),
                                         i.getDepartment(),

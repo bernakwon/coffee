@@ -13,10 +13,12 @@ public class MenuSelectUserByPartyResponse {
 
     private Long partyId;
     private String partyName;
+    private Long userId;
     private String name;
     private String team;
     private String department;
     private String rank;
     private boolean isOrderComplete;
+
 
 }

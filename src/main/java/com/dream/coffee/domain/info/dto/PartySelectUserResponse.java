@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PartySelectUserResponse {
 
+    private Long userId;
     private String name;
     private String team;
     private String department;

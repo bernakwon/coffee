@@ -41,7 +41,7 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
     List<OrderedUserResponse> findUsersByPartyIdAndMenuId(@Param("partyId") Long partyId, @Param("menuId") Long menuId);
 
 
-    @Query("SELECT new  com.dream.coffee.domain.info.dto.MenuSelectUserByPartyResponse(p.partyId,p.name, u.name, u.team, u.department, u.level, " +
+    @Query("SELECT new  com.dream.coffee.domain.info.dto.MenuSelectUserByPartyResponse(p.partyId,p.name,u.userId, u.name, u.team, u.department, u.level, " +
             "CASE WHEN o.id IS NOT NULL THEN true ELSE false END) " +
             "FROM PartyAttendee pa " +
             "JOIN pa.user u " +
