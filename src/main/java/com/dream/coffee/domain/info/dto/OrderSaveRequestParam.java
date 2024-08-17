@@ -1,6 +1,7 @@
 package com.dream.coffee.domain.info.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ public class OrderSaveRequestParam {
     private Long menuId;
     private Long cafeId;
     private Long partyId;
+    @Schema(description = "직접입력메뉴")
+    private String directMenu;//직접입력
 
 }
 

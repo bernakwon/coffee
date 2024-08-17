@@ -35,9 +35,9 @@ public class InfoApi {
     }
     @Operation(summary = "카페 목록 조회(페이징)")
     @GetMapping("/cafe/info")
-    public Page<Cafe> getCafeList(@RequestParam("page") int page){
+    public List<Cafe> getCafeList(){
 
-        return cafeService.getAllCafe(page, 10);
+        return cafeService.getAllCafe();
     }
 
     @Operation(summary = "파티 목록 조회")

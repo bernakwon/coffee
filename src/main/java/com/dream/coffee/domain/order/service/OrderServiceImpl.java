@@ -34,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
                 .menuId(orderSaveRequestParam.getMenuId())
                 .partyId(orderSaveRequestParam.getPartyId())
                 .userId(orderSaveRequestParam.getUserId())
+                .directMenu(orderSaveRequestParam.getDirectMenu())
                 .build();
 
         return orderRepository.save(newOrders);
@@ -90,9 +91,9 @@ public class OrderServiceImpl implements OrderService {
 
                     // Placeholder values for other counts (you can implement specific logic if needed)
                     int orderUserCount = userCount.intValue();
-                    Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId);
+                    Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId,null);
                     int orderDrinkCount = drinkCount.intValue();
-                    Long orderTargetDrinkCount = orderRepository.countOrdersByPartyAndAttendees(partyId);
+                    Long orderTargetDrinkCount = partyAttendeeRepository.countAttendeesByPartyId(partyId,99L);
 
                     return new OrderStatusResponse(
                             partyName,
