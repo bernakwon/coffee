@@ -19,6 +19,6 @@ public class Orders {
     private Long cafeId;
     private Long userId;
     private Long menuId;
-    private String directMenu;
+    private String customMenu;
 
 }

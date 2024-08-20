@@ -17,7 +17,8 @@ public class MenuSelectUserResponse {
     private Long menuId;
     private String menuNm;
     private String userNm;
-   private String telNo;
+    private String telNo;
+
 
 
 }

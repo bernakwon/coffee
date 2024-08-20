@@ -16,7 +16,7 @@ public class OrderSaveRequestParam {
     private Long cafeId;
     private Long partyId;
     @Schema(description = "직접입력메뉴")
-    private String directMenu;//직접입력
+    private String customMenu;//직접입력
 
 }
 

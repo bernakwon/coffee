@@ -17,7 +17,9 @@ public interface PartyAttendeeRepository extends JpaRepository<PartyAttendee,Lon
             "FROM PartyAttendee pa  join pa.user join pa.party WHERE pa.party.partyId = :partyId")
     List<PartyInfoResponse> findAttendeesByPartyId(@Param("partyId") Long partyId);
 
-    @Query("SELECT COUNT(pa) FROM PartyAttendee pa WHERE pa.party.partyId = :partyId" +
-            " AND (:menuId IS NULL OR pa.party.menuId != :menuId)")
+    @Query("SELECT COUNT(pa) FROM PartyAttendee pa " +
+            "JOIN Orders o ON pa.party.partyId = o.partyId " +
+            "WHERE o.partyId = :partyId " +
+            "AND (:menuId IS NULL OR o.menuId = :menuId)")
     Long countAttendeesByPartyId(@Param("partyId") Long partyId,@Param("menuId") Long menuId);
 }

@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
                 .menuId(orderSaveRequestParam.getMenuId())
                 .partyId(orderSaveRequestParam.getPartyId())
                 .userId(orderSaveRequestParam.getUserId())
-                .directMenu(orderSaveRequestParam.getDirectMenu())
+                .customMenu(orderSaveRequestParam.getCustomMenu())
                 .build();
 
         return orderRepository.save(newOrders);

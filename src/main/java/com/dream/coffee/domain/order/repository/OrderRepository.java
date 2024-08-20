@@ -13,14 +13,14 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Orders,Long> {
 
 
-    @Query("select new com.dream.coffee.domain.info.dto.MenuSelectUserResponse(m.id,m.name,u.name,u.telNo) from Orders o " +
+    @Query("select new com.dream.coffee.domain.info.dto.MenuSelectUserResponse(m.id, case when o.customMenu is not null then o.customMenu else m.name end,u.name,u.telNo) from Orders o " +
             "left join Menu m on m.id=o.menuId " +
             "left join Users u on u.userId=o.userId " +
             "where o.menuId=:menuId " +
             "and o.partyId=:partyId")
     List<MenuSelectUserResponse> getMenuSelectUsers(@Param("menuId") Long menuId, @Param("partyId") Long partyId);
 
-    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, m.name, COUNT(DISTINCT o.userId), COUNT(o.menuId)) " +
+    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId,case when o.customMenu is not null then o.customMenu else m.name end, COUNT(DISTINCT o.userId), COUNT(o.menuId)) " +
             "from Orders o " +
             "left join Party p on p.partyId = o.partyId " +
             "left join Cafe c on o.cafeId = c.cafeId " +
