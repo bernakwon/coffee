@@ -20,13 +20,15 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
             "and o.partyId=:partyId")
     List<MenuSelectUserResponse> getMenuSelectUsers(@Param("menuId") Long menuId, @Param("partyId") Long partyId);
 
-    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId,case when o.customMenu is not null then o.customMenu else m.name end, COUNT(DISTINCT o.userId), COUNT(o.menuId)) " +
+    @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, " +
+            "case when o.customMenu is not null then o.customMenu else m.name end, " +
+            "COUNT(DISTINCT o.userId), COUNT(o.menuId)) " +
             "from Orders o " +
             "left join Party p on p.partyId = o.partyId " +
             "left join Cafe c on o.cafeId = c.cafeId " +
             "left join Menu m on o.menuId = m.id " +
             "where o.partyId = :partyId " +
-            "group by p.name, c.cafeName, p.endDt, o.menuId, m.name")
+            "group by p.name, c.cafeName, p.endDt, o.menuId, o.customMenu, m.name")
     List<OrderPureInfo> findOrderStatusByPartyId(@Param("partyId") Long partyId);
 
     @Query("SELECT COUNT(o) FROM Orders o " +
