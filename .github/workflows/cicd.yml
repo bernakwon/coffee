@@ -72,4 +72,4 @@ jobs:
             
             sudo docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
-            sudo docker run --name ${{ secrets.SERVER_NAME }} -d -p 80:9595 -e TZ=Asia/Seoul ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }} --restart=always
+            sudo docker run --name ${{ secrets.SERVER_NAME }} -d -p 80:9595 -p 443:443 -e TZ=Asia/Seoul ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }} --restart=always
