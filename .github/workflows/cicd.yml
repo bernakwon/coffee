@@ -3,7 +3,7 @@ name: Spring Boot & Gradle CI/CD
 
 # 어떤 이벤트가 발생하면 workflow 실행할 지 명시
 on:
-  # main 브랜치에 push나 pull request 발생 시
+  # master 브랜치에 push나 pull request 발생 시
   push:
     branches: [ "master" ]
   pull_request:
@@ -12,7 +12,7 @@ on:
 # 위 이벤트 발생 시 실행될 작업들
 jobs:
   build:
-    # VM의실행 환경 지정 => 우분투 최신 버전
+    # VM의 실행 환경 지정 => 우분투 최신 버전
     runs-on: ubuntu-latest
 
     # 실행될 jobs를 순서대로 명시
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # JDK 11 설치
+      # JDK 17 설치
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -45,7 +45,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-
       # Docker 이미지 빌드
       - name: Docker Image Build
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }} .
@@ -54,8 +53,25 @@ jobs:
       - name: DockerHub Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
 
+      # GitHub Actions의 IP 주소를 가져오기
+      - name: Get GitHub Actions IP
+        id: ip
+        uses: haythem/public-ip@v1.2
 
-      # EC2 인스턴스 접속 / 애플리케이션실행
+      # AWS 자격 증명 설정
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      # GitHub Actions IP를 보안 그룹에 추가
+      - name: Add GitHub Actions IP to Security Group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-name ${{ secrets.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      # EC2 인스턴스 접속 / 애플리케이션 실행
       - name: Application Run
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -73,3 +89,8 @@ jobs:
             sudo docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_HUB_TOKEN }}
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
             sudo docker run --name ${{ secrets.SERVER_NAME }} -d -p 80:9595 -e TZ=Asia/Seoul ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }} --restart=always
+
+      # GitHub Actions IP를 보안 그룹에서 제거
+      - name: Remove GitHub Actions IP from Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-name ${{ secrets.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
