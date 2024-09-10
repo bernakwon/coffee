@@ -15,6 +15,7 @@ import org.springframework.util.ObjectUtils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,13 +73,17 @@ public class OrderServiceImpl implements OrderService {
                     String partyName = (String) e.getKey().get(0);
                     String cafeNm = (String) e.getKey().get(1);
                     LocalDateTime endDt = (LocalDateTime) e.getKey().get(2);
+
+                    AtomicLong counter = new AtomicLong(20000L); // 시작값을 0으로 설정
+
                     Map<Long, List<OrderPureInfo>> menuGroup = e.getValue().stream()
                             .collect(Collectors.groupingBy(
                                     order -> {
                                         Long menuId = order.getMenuId();
-                                        return (menuId != null) ? menuId : -1L; // menuId가 null일 경우 기본값 -1L 사용
+                                        return (menuId != null) ? menuId : counter.incrementAndGet(); // menuId가 null일 경우 증가된 값 반환
                                     }
                             ));
+
 
                     Set<OrderMenuCountReponse> orderMenuInfoList = new HashSet<>();
 
@@ -105,7 +110,15 @@ public class OrderServiceImpl implements OrderService {
                                     String menuName = entry.getValue().get(0).getMenuNm();
                                     int orderCount = entry.getValue().size();
 
-                                    List<OrderedUserResponse> users = orderRepository.findUsersByPartyIdAndMenuId(partyId, menuId);
+                                    List<OrderedUserResponse> users = new ArrayList<>();
+
+                                    if (menuId >= 20000 && menuId < 30000) {
+                                        // menuId가 2로 시작하는 5자리 숫자인 경우 customMenu로 검색
+                                        users = orderRepository.findUsersByPartyIdAndCustomMenu(partyId, menuName);
+                                    } else {
+                                        // 그렇지 않은 경우 기존 menuId로 검색
+                                        users = orderRepository.findUsersByPartyIdAndMenuId(partyId, menuId);
+                                    }
 
                                     return new OrderMenuCountReponse(menuId, menuName, orderCount, users);
                                 })
