@@ -10,6 +10,7 @@ import com.dream.coffee.global.error.CommonException;
 import com.dream.coffee.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
         }
         Orders newOrders = Orders.builder()
                 .cafeId(orderSaveRequestParam.getCafeId())
-                .menuId(orderSaveRequestParam.getCustomMenu() != null ? -1L : orderSaveRequestParam.getMenuId())
+                .menuId(ObjectUtils.isEmpty(orderSaveRequestParam.getMenuId()) ? -1L : orderSaveRequestParam.getMenuId())
                 .partyId(orderSaveRequestParam.getPartyId())
                 .userId(orderSaveRequestParam.getUserId())
                 .customMenu(orderSaveRequestParam.getCustomMenu())
