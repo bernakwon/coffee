@@ -97,10 +97,9 @@ public class OrderServiceImpl implements OrderService {
                             .sum();
                     boolean orderState = endDt.isAfter(LocalDateTime.now());
 
-                    // Placeholder values for other counts (you can implement specific logic if needed)
-               //     int orderUserCount = userCount.intValue();
+
                     Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId);
-                 //   int orderDrinkCount = drinkCount.intValue();
+
                     Long orderTargetDrinkCount = partyAttendeeRepository.countAttendeesByPartyIdNotMenuId(partyId,99L);
 
                     if(orderUserCount>0){
@@ -113,6 +112,7 @@ public class OrderServiceImpl implements OrderService {
                                     List<OrderedUserResponse> users = new ArrayList<>();
 
                                     if (menuId >= 20000 && menuId < 30000) {
+                                        menuId = null;
                                         // menuId가 2로 시작하는 5자리 숫자인 경우 customMenu로 검색
                                         users = orderRepository.findUsersByPartyIdAndCustomMenu(partyId, menuName);
                                     } else {

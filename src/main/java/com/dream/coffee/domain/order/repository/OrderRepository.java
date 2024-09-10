@@ -23,7 +23,7 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
     @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, " +
             "case when o.customMenu is not null then o.customMenu else m.name end, " +
             "COUNT(DISTINCT o) ," +
-            "COUNT(CASE WHEN o.menuId IS NOT NULL AND o.menuId != 99 THEN o.menuId END)) " +
+            "COUNT(CASE WHEN o.menuId IS NULL OR o.menuId != 99 THEN 1 END)) " +
             "from Party p " +
             "left join Cafe c on p.cafeId = c.cafeId " +
             "left join Orders o on p.partyId = o.partyId " +
