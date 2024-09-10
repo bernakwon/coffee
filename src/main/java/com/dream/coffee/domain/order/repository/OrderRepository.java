@@ -22,12 +22,13 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
 
     @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, " +
             "case when o.customMenu is not null then o.customMenu else m.name end, " +
-            "COUNT(DISTINCT o.userId), COUNT(o.menuId)) " +
-            "from Orders o " +
-            "left join Party p on p.partyId = o.partyId " +
-            "left join Cafe c on o.cafeId = c.cafeId " +
+            "COUNT(DISTINCT o.userId) ," +
+            "COUNT(CASE WHEN o.menuId IS NOT NULL AND o.menuId != 99 THEN o.menuId END)) " +
+            "from Party p " +
+            "left join Cafe c on p.cafeId = c.cafeId " +
+            "left join Orders o on p.partyId = o.partyId " +
             "left join Menu m on o.menuId = m.id " +
-            "where o.partyId = :partyId " +
+            "where p.partyId = :partyId " +
             "group by p.name, c.cafeName, p.endDt, o.menuId, o.customMenu, m.name")
     List<OrderPureInfo> findOrderStatusByPartyId(@Param("partyId") Long partyId);
 

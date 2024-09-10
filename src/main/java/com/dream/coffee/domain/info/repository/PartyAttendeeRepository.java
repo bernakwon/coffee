@@ -22,4 +22,10 @@ public interface PartyAttendeeRepository extends JpaRepository<PartyAttendee,Lon
             "WHERE o.partyId = :partyId " +
             "AND (:menuId IS NULL OR o.menuId = :menuId)")
     Long countAttendeesByPartyId(@Param("partyId") Long partyId,@Param("menuId") Long menuId);
+
+    @Query("SELECT COUNT(DISTINCT pa.user) FROM PartyAttendee pa " +
+            "LEFT JOIN Orders o ON pa.party.partyId = o.partyId AND pa.user.userId = o.userId " +
+            "WHERE pa.party.partyId = :partyId " +
+            "AND (o.menuId IS NULL OR o.menuId <> :menuId)")
+    Long countAttendeesByPartyIdNotMenuId(@Param("partyId") Long partyId,@Param("menuId") Long menuId);
 }

@@ -30,12 +30,14 @@ public class OrderServiceImpl implements OrderService {
         if (Objects.isNull(orderSaveRequestParam)) {
             throw new CommonException(ErrorCode.INVALID_PARAM);
         }
-        Orders newOrders = Orders.builder().cafeId(orderSaveRequestParam.getCafeId())
-                .menuId(orderSaveRequestParam.getMenuId())
+        Orders newOrders = Orders.builder()
+                .cafeId(orderSaveRequestParam.getCafeId())
+                .menuId(orderSaveRequestParam.getCustomMenu() != null ? -1L : orderSaveRequestParam.getMenuId())
                 .partyId(orderSaveRequestParam.getPartyId())
                 .userId(orderSaveRequestParam.getUserId())
                 .customMenu(orderSaveRequestParam.getCustomMenu())
                 .build();
+
 
         return orderRepository.save(newOrders);
     }
@@ -70,19 +72,14 @@ public class OrderServiceImpl implements OrderService {
                     String cafeNm = (String) e.getKey().get(1);
                     LocalDateTime endDt = (LocalDateTime) e.getKey().get(2);
                     Map<Long, List<OrderPureInfo>> menuGroup = e.getValue().stream()
-                            .collect(Collectors.groupingBy(OrderPureInfo::getMenuId));
+                            .collect(Collectors.groupingBy(
+                                    order -> {
+                                        Long menuId = order.getMenuId();
+                                        return (menuId != null) ? menuId : -1L; // menuId가 null일 경우 기본값 -1L 사용
+                                    }
+                            ));
 
-                    Set<OrderMenuCountReponse> orderMenuInfoList = menuGroup.entrySet().stream()
-                            .map(entry -> {
-                                Long menuId = entry.getKey();
-                                String menuName = entry.getValue().get(0).getMenuNm();
-                                int orderCount = entry.getValue().size();
-
-                                List<OrderedUserResponse> users = orderRepository.findUsersByPartyIdAndMenuId(partyId, menuId);
-
-                                return new OrderMenuCountReponse(menuId, menuName, orderCount, users);
-                            })
-                            .collect(Collectors.toSet());
+                    Set<OrderMenuCountReponse> orderMenuInfoList = new HashSet<>();
 
 
                     Long userCount = e.getValue().get(0).getUserCount();
@@ -93,7 +90,21 @@ public class OrderServiceImpl implements OrderService {
                     int orderUserCount = userCount.intValue();
                     Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId,null);
                     int orderDrinkCount = drinkCount.intValue();
-                    Long orderTargetDrinkCount = partyAttendeeRepository.countAttendeesByPartyId(partyId,99L);
+                    Long orderTargetDrinkCount = partyAttendeeRepository.countAttendeesByPartyIdNotMenuId(partyId,99L);
+
+                    if(orderUserCount>0){
+                        orderMenuInfoList = menuGroup.entrySet().stream()
+                                .map(entry -> {
+                                    Long menuId = entry.getKey();
+                                    String menuName = entry.getValue().get(0).getMenuNm();
+                                    int orderCount = entry.getValue().size();
+
+                                    List<OrderedUserResponse> users = orderRepository.findUsersByPartyIdAndMenuId(partyId, menuId);
+
+                                    return new OrderMenuCountReponse(menuId, menuName, orderCount, users);
+                                })
+                                .collect(Collectors.toSet());
+                    }
 
                     return new OrderStatusResponse(
                             partyName,
