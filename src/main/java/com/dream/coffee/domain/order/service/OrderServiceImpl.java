@@ -108,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
                                 .map(entry -> {
                                     Long menuId = entry.getKey();
                                     String menuName = entry.getValue().get(0).getMenuNm();
-                                    int orderCount = entry.getValue().size();
+
 
                                     List<OrderedUserResponse> users = new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
                                         users = orderRepository.findUsersByPartyIdAndMenuId(partyId, menuId);
                                     }
 
-                                    return new OrderMenuCountReponse(menuId, menuName, orderCount, users);
+                                    return new OrderMenuCountReponse(menuId, menuName, users.size(), users);
                                 })
                                 .collect(Collectors.toSet());
                     }
