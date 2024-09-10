@@ -33,10 +33,10 @@ public class OrderServiceImpl implements OrderService {
         }
         Orders newOrders = Orders.builder()
                 .cafeId(orderSaveRequestParam.getCafeId())
-                .menuId(ObjectUtils.isEmpty(orderSaveRequestParam.getMenuId()) ? -1L : orderSaveRequestParam.getMenuId())
+                .menuId(orderSaveRequestParam.getMenuId())
                 .partyId(orderSaveRequestParam.getPartyId())
                 .userId(orderSaveRequestParam.getUserId())
-                .customMenu(orderSaveRequestParam.getCustomMenu())
+                .customMenu(orderSaveRequestParam.getMenuNm())
                 .build();
 
 
