@@ -83,14 +83,19 @@ public class OrderServiceImpl implements OrderService {
                     Set<OrderMenuCountReponse> orderMenuInfoList = new HashSet<>();
 
 
-                    Long userCount = e.getValue().get(0).getUserCount();
-                    Long drinkCount = e.getValue().get(0).getDrinkCount();
+                    int orderUserCount = (int) e.getValue().stream()
+                            .mapToLong(OrderPureInfo::getUserCount)
+                            .sum();
+
+                    int orderDrinkCount = (int) e.getValue().stream()
+                            .mapToLong(OrderPureInfo::getDrinkCount)
+                            .sum();
                     boolean orderState = endDt.isAfter(LocalDateTime.now());
 
                     // Placeholder values for other counts (you can implement specific logic if needed)
-                    int orderUserCount = userCount.intValue();
-                    Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId,null);
-                    int orderDrinkCount = drinkCount.intValue();
+               //     int orderUserCount = userCount.intValue();
+                    Long orderTargetUserCount = partyAttendeeRepository.countAttendeesByPartyId(partyId);
+                 //   int orderDrinkCount = drinkCount.intValue();
                     Long orderTargetDrinkCount = partyAttendeeRepository.countAttendeesByPartyIdNotMenuId(partyId,99L);
 
                     if(orderUserCount>0){
