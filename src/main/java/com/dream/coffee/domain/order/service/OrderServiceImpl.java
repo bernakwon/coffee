@@ -32,6 +32,10 @@ public class OrderServiceImpl implements OrderService {
         if (Objects.isNull(orderSaveRequestParam)) {
             throw new CommonException(ErrorCode.INVALID_PARAM);
         }
+        Orders duplOrder = orderRepository.findOrdersByUserIdAndPartyId(orderSaveRequestParam.getUserId(), orderSaveRequestParam.getPartyId());
+        if (!Objects.isNull((duplOrder))) {
+            throw new CommonException(ErrorCode.ORDERED_USER);
+        }
         Orders newOrders = Orders.builder()
                 .cafeId(orderSaveRequestParam.getCafeId())
                 .menuId(orderSaveRequestParam.getMenuId())
