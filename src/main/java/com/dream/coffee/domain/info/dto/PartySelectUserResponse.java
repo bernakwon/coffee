@@ -14,5 +14,6 @@ public class PartySelectUserResponse {
     private String team;
     private String department;
     private String rank;
+    private String telNo;
     private boolean isOrderComplete;
 }

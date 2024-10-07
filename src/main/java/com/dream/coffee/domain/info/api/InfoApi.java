@@ -60,7 +60,7 @@ public class InfoApi {
 
     @Operation(summary = "파티별 메뉴목록 조회(페이징)")
     @GetMapping("/menu/info/{partyId}")
-    public Page<Menu> getMenu(@PathVariable("partyId") String partyId,@RequestParam("page") int page,@RequestParam("searchTag")  String searchTag){
+    public Page<MenuInfoResponse> getMenu(@PathVariable("partyId") String partyId,@RequestParam("page") int page,@RequestParam("searchTag")  String searchTag){
 
     return menuService.getMenus(partyId,page,searchTag);
     }

@@ -36,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Page<Menu> getMenus(String partyId, int page, String searchTag) {
+    public Page<MenuInfoResponse> getMenus(String partyId, int page, String searchTag) {
         //page가 0부터 시작해야하는데 1부터 넘어올때 -1을 해줌,0보다 작으면 0으로 설정
         page = page <= 0 ? 0 : page - 1;
         int size = 10;

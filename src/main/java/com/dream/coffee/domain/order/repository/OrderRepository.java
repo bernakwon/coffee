@@ -23,7 +23,10 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
     @Query("select new com.dream.coffee.domain.order.dto.OrderPureInfo(p.name, c.cafeName, p.endDt, o.menuId, " +
             "case when o.customMenu is not null then o.customMenu else m.name end, " +
             "COUNT(DISTINCT o) ," +
-            "COUNT(CASE WHEN o.menuId IS NOT NULL AND o.menuId != 99 THEN 1 END)) " +
+            "COUNT( CASE \n" +
+            "        WHEN o.menuId = 99 THEN 0\n" +
+            "        ELSE 1 \n" +
+            "    END)) " +
             "from Party p " +
             "left join Cafe c on p.cafeId = c.cafeId " +
             "left join Orders o on p.partyId = o.partyId " +
@@ -50,7 +53,7 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
     List<OrderedUserResponse> findUsersByPartyIdAndCustomMenu(@Param("partyId") Long partyId, @Param("customMenu") String customMenu);
 
 
-    @Query("SELECT new  com.dream.coffee.domain.info.dto.MenuSelectUserByPartyResponse(p.partyId,p.name,u.userId, u.name, u.team, u.department, u.level, " +
+    @Query("SELECT new  com.dream.coffee.domain.info.dto.MenuSelectUserByPartyResponse(p.partyId,p.name,u.userId, u.name, u.team, u.department, u.level,u.telNo, " +
             "CASE WHEN o.id IS NOT NULL THEN true ELSE false END) " +
             "FROM PartyAttendee pa " +
             "JOIN pa.user u " +

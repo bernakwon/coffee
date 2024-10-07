@@ -32,11 +32,12 @@ public class OrderServiceImpl implements OrderService {
         if (Objects.isNull(orderSaveRequestParam)) {
             throw new CommonException(ErrorCode.INVALID_PARAM);
         }
-        Orders duplOrder = orderRepository.findOrdersByUserIdAndPartyId(orderSaveRequestParam.getUserId(), orderSaveRequestParam.getPartyId());
-        if (!Objects.isNull((duplOrder))) {
-            throw new CommonException(ErrorCode.ORDERED_USER);
-        }
-        Orders newOrders = Orders.builder()
+
+        Orders existingOrder = orderRepository.findOrdersByUserIdAndPartyId(orderSaveRequestParam.getUserId(), orderSaveRequestParam.getPartyId());
+
+        Orders newOrder = (existingOrder != null) ? existingOrder : new Orders();
+
+        newOrder = Orders.builder()
                 .cafeId(orderSaveRequestParam.getCafeId())
                 .menuId(orderSaveRequestParam.getMenuId())
                 .partyId(orderSaveRequestParam.getPartyId())
@@ -44,8 +45,8 @@ public class OrderServiceImpl implements OrderService {
                 .customMenu(orderSaveRequestParam.getMenuNm())
                 .build();
 
+        return orderRepository.save(newOrder);
 
-        return orderRepository.save(newOrders);
     }
 
     @Override
@@ -168,6 +169,7 @@ public class OrderServiceImpl implements OrderService {
                                         i.getTeam(),
                                         i.getDepartment(),
                                         i.getRank(),
+                                        i.getTelNo(),
                                         i.isOrderComplete()))
                                 .collect(Collectors.toSet())
                 ))
