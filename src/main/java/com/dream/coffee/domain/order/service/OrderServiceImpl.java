@@ -36,15 +36,18 @@ public class OrderServiceImpl implements OrderService {
         Orders existingOrder = orderRepository.findOrdersByUserIdAndPartyId(orderSaveRequestParam.getUserId(), orderSaveRequestParam.getPartyId());
 
         Orders newOrder = (existingOrder != null) ? existingOrder : new Orders();
-
-        newOrder = Orders.builder()
-                .cafeId(orderSaveRequestParam.getCafeId())
-                .menuId(orderSaveRequestParam.getMenuId())
-                .partyId(orderSaveRequestParam.getPartyId())
-                .userId(orderSaveRequestParam.getUserId())
-                .customMenu(orderSaveRequestParam.getMenuNm())
-                .build();
-
+      if(existingOrder != null) {
+          newOrder.setMenuId(orderSaveRequestParam.getMenuId());
+          newOrder.setCustomMenu(orderSaveRequestParam.getMenuNm());
+      } else {
+          newOrder = Orders.builder()
+                  .cafeId(orderSaveRequestParam.getCafeId())
+                  .menuId(orderSaveRequestParam.getMenuId())
+                  .partyId(orderSaveRequestParam.getPartyId())
+                  .userId(orderSaveRequestParam.getUserId())
+                  .customMenu(orderSaveRequestParam.getMenuNm())
+                  .build();
+      }
         return orderRepository.save(newOrder);
 
     }
@@ -100,6 +103,10 @@ public class OrderServiceImpl implements OrderService {
                     int orderDrinkCount = (int) e.getValue().stream()
                             .mapToLong(OrderPureInfo::getDrinkCount)
                             .sum();
+
+                    if(orderUserCount ==0){
+                        orderDrinkCount =0;
+                    }
                     boolean orderState = endDt.isAfter(LocalDateTime.now());
 
 

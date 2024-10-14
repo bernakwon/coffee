@@ -2,10 +2,7 @@ package com.dream.coffee.domain.order.entity;
 
 import com.dream.coffee.domain.info.entity.Party;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +15,9 @@ public class Orders {
     private Long partyId;
     private Long cafeId;
     private Long userId;
+    @Setter
     private Long menuId;
+    @Setter
     private String customMenu;
 
 }
